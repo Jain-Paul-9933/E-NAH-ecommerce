@@ -1,0 +1,91 @@
+﻿{% extends 'vendorside/vendorbase.html' %}
+{% block title %}Stock Details Page{% endblock title %}
+{% block body %}
+<h1 class="text-center">Stock Management</h1>
+<div class="container ">
+    <table class="table table-borderless mt-4 align-middle table-striped">
+        <thead>
+            <tr>
+                <th class="text-center"><h4><b>Product</b></h4></th>
+                <th class="text-center"><h4><b>Quantity</b></h4></th>
+                <th class="text-center"><h4><b>Actions</b></h4></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td class="text-center">{{ product.productname }}</td>
+                {% if product.quantity >= 50 %}
+                <td class="text-center text-success"><h2><b>{{ product.quantity }}</b></h2></td>
+                {% elif product.quantity >= 20 %}
+                <td class="text-center text-warning"><h2><b>{{ product.quantity }}</b></h2></td>
+                {% else %}
+                <td class="text-center text-danger"><h2><b>{{ product.quantity }}</b></h2></td>
+                {% endif %}
+                <td class="text-center">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ product.id }}">
+                        <b>Update the Stock</b>
+                    </button>
+
+                    <form action="/update_stock/{{ product.id }}" method="post">
+                        {% csrf_token %}
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal{{ product.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Stock</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>{{ product.productname }}</h3>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <img src="/media/{{ product.img1 }}" height="200" width="250" class="rounded-5" />
+                                            </div>
+                                            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                                <h1>Qty:</h1>
+                                                {% if product.quantity >= 50 %}
+                                                <h1 class="text-center text-success"><b>{{ product.quantity }}</b></h1>
+                                                {% elif product.quantity >= 20 %}
+                                                <h1 class="text-center text-warning"><b>{{ product.quantity }}</b></h1>
+                                                {% else %}
+                                                <h1 class="text-center text-danger"><b>{{ product.quantity }}</b></h1>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                                <div class="form-group">
+                                                    <label for="product-categories"><b>Select type of updation:</b></label>
+                                                    <select class="form-control mt-2 mb-3" id="update_type" name="update_type" required>
+                                                        <option value="+" selected>Increase(+)</option>
+                                                        <option value="-">Decrease(-)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                                <div class="form-group">
+                                                    <label for="quantity"><b>Quantity:</b></label>
+                                                    <input type="text" class="form-control mt-2 mb-3" id="quantity" name="quantity" placeholder="0" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-success">Update</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock body %}

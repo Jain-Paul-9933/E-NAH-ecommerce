@@ -1,0 +1,21 @@
+﻿{% extends 'userside/base.html' %}
+{% block title %}Wish List{% endblock title %}
+{% block body %}
+<div class="container mt-5">
+    <h1>My Wishlist</h1>
+    <div class="row">
+        {% for product in wishlist %}
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="card h-100 displaycard p-3">
+                <img src="/media/{{ product.img1 }}" class="card-img-top rounded-5" alt="Product Image 1" width="50" height="200">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.product_name }}</h5>
+                    <a href="/addtobasket/{{ product.product_id }}" class="btn btn-success">Add to Basket</a>
+                    <a href="/remove_from_wishlist/{{ product.product_id }}" class="btn btn-danger">Remove</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body%}

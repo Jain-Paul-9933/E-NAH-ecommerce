@@ -1,0 +1,22 @@
+﻿{% extends 'adminside/adminbase.html' %}
+{% block title %}Vendor User{% endblock title %}
+{% block body %}
+<div class="container mt-4">
+    <h1>User Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"> {{ s.name }}</h5>
+            <p class="card-text"><strong>User ID:</strong> {{ s.id }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ s.email }}</p>
+            <p class="card-text"><strong>Phone:</strong> {{ s.phone }}</p>
+            <p class="card-text"><strong>Address:</strong> 123 Main St, City, Country</p>
+            <!-- Add more user details as needed -->
+        </div>
+    </div>
+    {% if s.is_active is True %}
+    <a class="btn btn-danger" href="/blockuser/{{ s.id }}" role="button">Block</a>
+    {% else %}
+    <a class="btn btn-warning" href="/unblockuser/{{ s.id }}" role="button">Unblock</a>
+    {% endif %}
+</div>
+{% endblock body %}

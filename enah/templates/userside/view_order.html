@@ -1,0 +1,82 @@
+﻿{% extends 'userside/base.html' %}
+{% block title %}Order Details{% endblock title %}
+{% block body %}
+<div class="container mt-5 d-flex justify-content-between">
+    <div class="card mb-3 w-100 mt-3 ">
+        <div class="card-header d-flex justify-content-between">
+            <h6><b>Order # </b>{{ bunch_order_id }}</h6>
+            <h6><b>Date : </b>{{ order_date }}</h6>
+        </div>
+        <div class="card-body p-4 d-flex justify-content-around">
+            <div class="w-75 me-3">
+                {% for order in orders %}
+                <div class="card w-100 mb-3">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <img src="/media/{{ order.product_image }}" alt="order_image" width="200" height="150" class="rounded-3" />
+                            </div>
+                            <div>
+                                <h5>#{{ order.id }}</h5>
+                                <h5 class="card-title">{{ order.product_name }}</h5>
+                                <p class="card-text">Qty:<b> {{ order.quantity }}</b></p>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="mb-5 ">
+                                {% if order.order_status == "Received" %}
+                                <span class="badge rounded-pill text-bg-secondary">Waiting for confirmation</span>
+                                {% elif order.order_status == "Accepted" %}
+                                <span class="badge rounded-pill text-bg-primary">Confirmed</span>
+                                {% elif order.order_status == "Packed" %}
+                                <span class="badge rounded-pill text-bg-warning">Packed</span>
+                                {% elif order.order_status == "Shipped" %}
+                                <span class="badge rounded-pill text-bg-info">Shipped</span>
+                                {% elif order.order_status == "Deliverd" %}
+                                <span class="badge rounded-pill text-bg-success">Deliverd</span>
+                                {% elif order.order_status == "Order Closed" %}
+                                <span class="badge rounded-pill text-bg-dark">Closed</span>
+                                {% elif order.order_status == "Canceled" %}
+                                <span class="badge rounded-pill text-bg-danger">Canceled</span>
+                                {% endif %}
+                            </div>
+                            {% if order.order_status != "Canceled" and order.order_status != "Order Closed" and order.order_status != "Deliverd" %}
+                            <a href="/user_cancel_order/{{ order.id }}" class="btn btn-danger mt-5">Cancel</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="w-25">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td colspan="3" class="text-right">Subtotal:</td>
+                            <td>₹{{ sub_total }}</td>
+                        </tr>
+                        {% if coupon is not None %}
+                        <tr>
+                            <td colspan="3" class="text-right">Discount({{ coupon.coupon_code }}):</td>
+                            <td>-₹{{ coupon_discount }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td colspan="3" class="text-right">Shipping:</td>
+                            <td>₹0.00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right">Total:</td>
+                            <td>₹{{ bunch_order_amount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <a href="/yourorders" class="btn btn-success">Back to My Orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock body %}

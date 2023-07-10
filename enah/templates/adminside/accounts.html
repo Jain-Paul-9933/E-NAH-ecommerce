@@ -1,0 +1,87 @@
+﻿{% extends 'adminside/adminbase.html' %}
+{% block title %}Accounts Page{% endblock title %}
+{% block body %}
+<div class="container">
+    <h1>Accounts </h1>
+    <div class="row">
+        <div class="col-xl-4 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <h5>Total Amount Received</h5>
+                    <h1>₹{{ total_amount_received }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <h5>Total Paltform Commision</h5>
+                    <h1>₹{{ total_platform_commision }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <h5>Total Vendors Rembusrment</h5>
+                    <h1>₹{{ total_vendor_rembursment }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">Danger Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Order ID:</th>
+                        <th>Vendor ID:</th>
+                        <th>Amount Recived:</th>
+                        <th>Platform Commission(-5%):</th>
+                        <th>SGST(-5%):</th>
+                        <th>CGST(-5%)</th>
+                        <th>Vendor Rembursement Amount:</th>
+                        <th>Order Closed Date</th>
+                        <th>Due Date For Rembursment</th>
+                    </tr>
+                    {% for account in accounts %}
+                    <tr>
+                        <td>{{ account.order_id }}</td>
+                        <td>{{ account.vendor_id }}</td>
+                        <td class="text-success"><b>+₹{{ account.amount_received }}</b></td>
+                        <td class="text-danger"><b>-₹{{ account.platform_commision }}</b></td>
+                        <td class="text-danger"><b>-₹{{ account.sgst }}</b></td>
+                        <td class="text-danger"><b>-₹{{ account.cgst }}</b></td>
+                        <td class="text-primary"><b>₹{{ account.vendor_rembursment }}</b></td>
+                        <td>{{ account.order_closed_date }}</td>
+                        <td>{{ account.order_rembursment_due_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

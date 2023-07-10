@@ -1,0 +1,26 @@
+﻿{% extends 'adminside/adminbase.html' %}
+{% block title %}Vendor Details{% endblock title %}
+{% block body %}
+<div class="container mt-4">
+    <h1>Vendor Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"> {{ u.name }}</h5>
+            <p class="card-text"><strong>Vendor ID:</strong> {{ u.id }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ u.email }}</p>
+            <p class="card-text"><strong>Phone:</strong> {{ u.phone }}</p>
+            <p class="card-text"><strong>Address:</strong> {{ v.address_1 }}<br>{{ v.address_2 }} </p>
+            <img src="/media/{{ v.photo }}" class="img-thumbnail" alt="photo">
+            <img src="/media/{{ v.idProof }}" class="img-thumbnail" alt="idproof">
+            <img src="/media/{{ v.license1 }}" class="img-thumbnail" alt="license_1">
+            <img src="/media/{{ v.license2 }}" class="img-thumbnail" alt="license_2">
+        </div>
+    </div>
+    {% if u.is_active is True %}
+    <a class="btn btn-danger" href="/blockuser/{{ u.id }}" role="button">Block</a>
+    {% else %}
+    <a class="btn btn-warning" href="/unblockuser/{{ u.id }}" role="button">Unblock</a>
+    {% endif %}
+    <a class="btn btn-info" href="/updatevendor/{{ u.id }}" role="button">Update</a>
+</div>
+{% endblock body %}

@@ -1,0 +1,108 @@
+﻿{% extends 'userside/base.html' %}
+{% block title %}Checkout page{% endblock title %}
+{% block body %}
+<div class="container mt-5">
+    <center><h1>Check out page</h1></center>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <form action="/place_and_pay/{{ final_cart_total }},{{ coupon_id }}" method="post">
+                {% csrf_token %}
+                <h4>Address selected for delivery</h4>
+                <div class="form-group mt-3">
+                    {% if address %}
+                    {% for addr in address %}
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="radio" name="address" id="address" value="{{ addr.id }}" required checked> <!--Here address id is allocated to the selection-->
+                        <label class="form-check-label" for="address1">
+                            <div class="card" style="width: 30rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ addr.full_name }}</h5>
+                                    <p class="card-text">{{ addr.address_lane_1 }},{{ addr.address_lane_2 }},{{ addr.city_or_town }},{{ addr.district }},{{ addr.pincode }},{{ addr.land_mark }}, Ph. {{ addr.phone_number }},{{ addr.alt_phone_number }}</p>
+                                </div>
+                            </div>
+                        </label>
+                        <a class="btn btn-warning mt-3" href="/youraddress"><b>Change Or Update the Address</b></a>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <a href="/address_registration" class="btn btn-primary"><b>Add New Address</b></a>
+                    {% endif %}
+                </div>
+                <h4 class="mt-5">Select the Payment Method</h4>
+                <div class="form-group mt-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payment" value="razorpay" id="razorpay" required>
+                        <label class="form-check-label" for="upiPayments">
+                            Razorpay(RPZ)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payment" value="cod" id="cashondelivery" required>
+                        <label class="form-check-label" for="cashOnDelivery">
+                            Cash on Delivery (COD)
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-lg btn-success mt-3"><b>Place Order and Pay ₹{{ final_cart_total }}</b></button>
+            </form>
+        </div>
+
+        <div class="col-md-6 justify-content-evenly">
+            <h4>Order Summary</h4>
+            <table class="table table-borderless mt-3 table-success table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in s %}
+                    <tr>
+                        <td><img src="/media/{{ i.img1 }}" alt="cartproducts" height="100" width="150" class="rounded-5" /></td>
+                        <td>{{ i.product_name }}</td>
+                        <td>₹{{ i.unit_price }}/kg or piece</td>
+                        <td>{{i.quantity}}</td>
+                        <td>₹{{ i.total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                <strong></strong>{{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            <form class="d-flex align-items-center justify-content-end mb-0" method="post" action="/apply_coupon/{{ cart_total }}">
+                {% csrf_token %}
+                <div class="input-group mb-1">
+                    <input type="text" class="form-control" placeholder="Enter coupon code to apply" name="coupon" id="coupon">
+                    <button class="btn btn-success" type="submit" id="button-addon1">Apply Coupon</button>
+                </div>
+            </form>
+            {% if coupon %}
+            <center><h6 class="text-success"><b>{{ coupon.coupon_code  }}</b>,applied for this order.</h6></center>
+            {% endif %}
+            <div class="card mb-5" style="width: 40rem;">
+                <div class="card-body d-flex justify-content-between ">
+                    <div class="text-start">
+                        <h6 class="text-secondary">Total Price</h6>
+                        <h6 class="text-secondary">Discount</h6>
+                        <h4>Total</h4>
+                    </div>
+                    <div class="text-end ">
+                        <h6 class="text-secondary">₹{{ cart_total }}</h6>
+                        <h6 class="text-secondary">-₹{{ coupon_discount }}</h6>
+                        <h4>₹{{ final_cart_total }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

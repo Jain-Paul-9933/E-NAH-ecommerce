@@ -1,0 +1,43 @@
+﻿{% extends 'userside/base.html' %}
+{% block title %}Basket{% endblock title %}
+{% block body %}
+<div class="container mt-5">
+    <h2>Shopping Basket</h2>
+    {% if s %}
+    <table class="table table-borderless mt-3 table-success table-striped align-middle ">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in s %}
+            <tr>
+                <td><img src="/media/{{ i.img1 }}" alt="cartproducts" height="150" width="200" class="rounded-5" /></td>
+                <td>{{ i.product_name }}</td>
+                <td>₹{{ i.unit_price }}/kg or piece</td>
+                <td><input type="number" style="width:50px" class="form-control" id="quantity" name="quantity" value="{{i.quantity}}" min="1"></td>
+                <td>₹{{ i.total }}</td>
+                <td>
+                    <a class="btn btn-danger btn-sm" href="/removefrombasket/{{ i.id }}">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-end">
+        <h2>Total: <b>₹{{ cart_total }}</b></h2>
+        <a class="btn btn-lg btn-success mb-5" href="/check_out/0,0">Checkout</a>
+    </div>
+    {% else %}
+    <div class="d-flex justify-content-center align-items-center">
+        <h4>Sorry,Basket is Empty.......</h4>
+    </div>
+    {% endif %}
+</div>
+{% endblock body %}

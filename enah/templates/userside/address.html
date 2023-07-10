@@ -1,0 +1,36 @@
+﻿{% extends 'userside/base.html' %}
+{% block title %}Select Address Page{% endblock title %}
+{% block body %}
+<div class="container mt-5">
+    <h1>My Addresses</h1>
+
+    <div class="row">
+        {% for i in address %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    {% if i.is_default is True %}
+                    <button class="btn btn-success mb-3 " disabled> Default</button>
+                    {% else %}
+                    <a href="/set_default/{{ i.id }}" class="btn btn-info mb-3">Set address as default</a>
+                    {% endif %}
+                    <h5 class="card-title">{{ i.full_name }}</h5>
+                    <p class="card-text">{{ i.address_lane_1 }}</p>
+                    <p class="card-text">{{ i.address_lane_2 }}</p>
+                    <p class="card-text">{{ i.pincode }}</p>
+                    <p class="card-text">{{ i.city_or_town }}</p>
+                    <p class="card-text">{{ i.district }}</p>
+                    <p class="card-text">{{ i.phone_number }}</p>
+                    <p class="card-text">{{ i.alt_phone_number }}</p>
+                    <p class="card-text">{{ i.land_mark }}</p>
+                    <a href="/update_address/{{ i.id }}" class="btn btn-warning">Update the Address</a>
+                    <a href="/delete_address/{{ i.id }}" class="btn btn-danger ">Delete the Address</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="/address_registration" class="btn btn-lg btn-primary">Add New Address</a>
+</div>
+{% endblock body %}

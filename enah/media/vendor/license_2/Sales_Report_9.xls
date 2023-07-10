@@ -1,0 +1,76 @@
+<table class="table table-primary table-striped mt-3" id="monthly_sales">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Product</th>
+                        <th>Quantity Sold</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td><b>July 1, 2023-Aug. 1, 2023</b></td>
+                        <td>Basket</td>
+                        <td>4 kg(or)unit</td>
+                        <td><b>₹480.00</b></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>July 1, 2023-Aug. 1, 2023</b></td>
+                        <td>Carrot</td>
+                        <td>13 kg(or)unit</td>
+                        <td><b>₹780.00</b></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>July 1, 2023-Aug. 1, 2023</b></td>
+                        <td>Chilly Powder</td>
+                        <td>9 kg(or)unit</td>
+                        <td><b>₹2250.00</b></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>July 1, 2023-Aug. 1, 2023</b></td>
+                        <td>Jackfruit</td>
+                        <td>8 kg(or)unit</td>
+                        <td><b>₹400.00</b></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>July 1, 2023-Aug. 1, 2023</b></td>
+                        <td>Kiwi gold</td>
+                        <td>22 kg(or)unit</td>
+                        <td><b>₹3300.00</b></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>July 1, 2023-Aug. 1, 2023</b></td>
+                        <td>Ladies finger</td>
+                        <td>6 kg(or)unit</td>
+                        <td><b>₹120.00</b></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>July 1, 2023-Aug. 1, 2023</b></td>
+                        <td>Masala Mixture</td>
+                        <td>20 kg(or)unit</td>
+                        <td><b>₹400.00</b></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>July 1, 2023-Aug. 1, 2023</b></td>
+                        <td>Orange</td>
+                        <td>2 kg(or)unit</td>
+                        <td><b>₹100.00</b></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>July 1, 2023-Aug. 1, 2023</b></td>
+                        <td>Papaya</td>
+                        <td>2 kg(or)unit</td>
+                        <td><b>₹60.00</b></td>
+                    </tr>
+                    
+                </tbody>
+            </table>

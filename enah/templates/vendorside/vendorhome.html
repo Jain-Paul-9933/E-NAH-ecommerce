@@ -1,0 +1,148 @@
+﻿{% extends 'vendorside/vendorbase.html' %}
+{% block title %}Vendor Homepage{% endblock title %}
+{% block body %}
+<div class="container">
+    <!--Modal for popup-->
+    {% if critical_stock %}
+    <div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Hi,{{ request.user.name }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="text-danger mt-3">These Products are critical in stock !!!</h4>
+                    {% for product in critical_stock %}
+                    <div class="d-flex align-items-center">
+                        <h5>{{ product.productname }}(Qty)</h5>: <h3 class="text-danger"><b>{{ product.quantity }}</b></h3>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <a href="/stock" class="btn btn-warning">Update</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- popup modal ends here-->
+    <!--Modal for admin notifications-->
+    {% if notifications %}
+    <div class="modal fade" id="adminNotificationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Hi,{{ request.user.name }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="text-dark mt-3">Notifications from Admin !!!</h4>
+                    {% for notification in notifications %}
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>{{ notification.notification_content }}</strong>({{ notification.date_and_time }})
+                            <a type="button" class="btn-close"
+                               href="/delete_notification/{{ notification.id }}"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- admin notifications modal ends here-->
+    <div class="row mt-3">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">Primary Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">Warning Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">Success Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">Danger Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4 class="mt-5"><u>Today order's List <b>({{ today_date }})</b></u></h4>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <!--<th>Product ID</th>-->
+                <th>Product Name</th>
+                <!--<th>User ID</th>
+                <th>Address ID</th>-->
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Payment Type</th>
+                <th>Payment Status</th>
+                <th>Order Status</th>
+                <th>Date and Time</th>
+                <th>Accept/Cancel</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in s %}
+            <tr>
+                <td><a href="/vendorvieworder/{{ i.id }}">{{ i.id }}</a></td>
+                <!-- <td>{{ i.product_id }}</td>-->
+                <td>{{ i.product_name }}</td>
+                <!--<td>{{ i.user_id }}</td>
+                <td>{{ i.address_id }}</td>-->
+                <td>{{ i.quantity }}</td>
+                <td>{{ i.amount }}</td>
+                <td>{{ i.payment_type }}</td>
+                <td>{{ i.payment_status }}</td>
+                <td>{{ i.order_status }}</td>
+                <td>{{ i.date_and_time }}</td>
+                <td>
+                    {% if i.order_status == 'Received' %}
+                    <a class="btn btn-success" href="/accept_order/{{ i.id }}">Accept</a>
+                    {% elif i.order_status == 'Canceled' %}
+                    <button class="btn btn-outline-danger" disabled>Canceled</button>
+                    {% elif i.order_status == 'Deliverd'%}
+                    <button class="btn btn btn-outline-success" disabled>Deliverd</button>
+                    {% elif i.order_status == 'Order Closed'%}
+                    <button class="btn btn btn-outline-dark" disabled>Order Closed</button>
+                    {% else %}
+                    <a class="btn btn-danger" href="/cancel_order/{{ i.id }}">Cancel</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock body %}

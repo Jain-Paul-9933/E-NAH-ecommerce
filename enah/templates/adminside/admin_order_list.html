@@ -1,0 +1,160 @@
+﻿{% extends 'adminside/adminbase.html' %}
+{% block title %}Orders List{% endblock title %}
+{% block body %}
+<div class="container">
+    <h1>Order List</h1>
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-secondary text-white mb-4">
+                <div class="card-body">
+                    <h5>Received Orders</h5>
+                    <h1>{{ recieved_order_count }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/admin_order_status_listing/Received">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <h5>Accepted Orders</h5>
+                    <h1>{{ accepted_order_count }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/admin_order_status_listing/Accepted">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <h5>Packed Orders</h5>
+                    <h1>{{ packed_order_count }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/admin_order_status_listing/Packed">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-info text-white mb-4">
+                <div class="card-body">
+                    <h5>Shipped Orders</h5>
+                    <h1>{{ shipped_order_count }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/admin_order_status_listing/Shipped">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <h5>Deliverd Orders</h5>
+                    <h1>{{ deliverd_order_count }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/admin_order_status_listing/Deliverd">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-dark text-white mb-4">
+                <div class="card-body">
+                    <h5>Closed Orders</h5>
+                    <h1>{{ closed_order_count }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/admin_order_status_listing/Order Closed">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">
+                    <h5>Canceled Orders</h5>
+                    <h1>{{ canceled_order_count }}</h1>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/admin_order_status_listing/Canceled">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <h3><b>All Orders</b></h3>
+            <tr>
+                <th>Order ID</th>
+                <!--<th>Product ID</th>-->
+                <th>Product Name</th>
+                <!--<th>User ID</th>
+                <th>Address ID</th>-->
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Vendor_id</th>
+                <th>Payment Type</th>
+                <th>Payment Status</th>
+                <th>Order Status</th>
+                <th>Date and Time</th>
+                <th>Cancel</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in s %}
+            <tr>
+                <td><a href="/adminvieworder/{{ i.id }}">{{ i.id }}</a></td>
+                <!-- <td>{{ i.product_id }}</td>-->
+                <td>{{ i.product_name }}</td>
+                <!--<td>{{ i.user_id }}</td>
+                <td>{{ i.address_id }}</td>-->
+                <td>{{ i.quantity }}</td>
+                <td>{{ i.amount }}</td>
+                <td>{{ i.vendor_id }}</td>
+                <td>{{ i.payment_type }}</td>
+                {% if i.payment_status == "Paid" %}
+                <td class="text-success"><b>{{ i.payment_status }}</b></td>
+                {% else %}
+                <td class="text-danger"><b>{{ i.payment_status }}</b></td>
+                {% endif %}
+                {% if i.order_status == "Received" %}
+                <td class="text-secondary"><b>{{ i.order_status }}</b></td>
+                {% elif i.order_status == "Accepted" %}
+                <td class="text-primary"><b>{{ i.order_status }}</b></td>
+                {% elif i.order_status == "Packed" %}
+                <td class="text-warning"><b>{{ i.order_status }}</b></td>
+                {% elif i.order_status == "Shipped" %}
+                <td class="text-info"><b>{{ i.order_status }}</b></td>
+                {% elif i.order_status == "Deliverd" %}
+                <td class="text-success"><b>{{ i.order_status }}</b></td>
+                {% elif i.order_status == "Order Closed" %}
+                <td class="text-dark"><b>{{ i.order_status }}</b></td>
+                {% elif i.order_status == "Canceled" %}
+                <td class="text-danger"><b>{{ i.order_status }}</b></td>
+                {% endif %}
+                <td>{{ i.date_and_time }}</td>
+                <td>
+                    {% if i.order_status == 'Canceled' %}
+                    <button class="btn btn-outline-danger" disabled>Canceled</button>
+                    {% elif i.order_status == 'Deliverd'%}
+                    <button class="btn btn btn-outline-success" disabled>Deliverd</button>
+                    {% elif i.order_status == 'Order Closed'%}
+                    <button class="btn btn btn-outline-dark" disabled>Order Closed</button>
+                    {% else %}
+                    <a class="btn btn-danger" href="/admin_cancel_order/{{ i.id }}">Cancel</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock body %}

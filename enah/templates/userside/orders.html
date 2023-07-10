@@ -1,0 +1,48 @@
+﻿{% extends 'userside/base.html' %}
+{% block title %}User Orders Page{% endblock title %}
+{% block body %}
+<div class="container mt-5">
+    <h1>My Orders</h1>
+    <table class="table mt-4 table-striped table-success table-borderless">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="text-center">Product</th>
+                <th scope="col" class="text-center col-2">Order ID</th>
+                <th scope="col" class="text-center">Product Name</th>
+                <th scope="col" class="text-center">Quantity</th>
+                <th scope="col" class="text-center">Status</th>
+                <th scope="col" class="text-center">Orderd Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td class="text-center"><img src="/media/{{ order.product_image }}" width="200" height="150" class="rounded-5" /></td>
+                <th scope="row" class="text-center">{{ order.bunch_order_id }}</th>
+                <td class="text-center">{{ order.product_name }}</td>
+                <td class="text-center">{{ order.quantity }}</td>
+                {% if order.order_status == "Received" %}
+                <td class="text-secondary text-center"><b>{{ order.order_status }}</b></td>
+                {% elif order.order_status == "Accepted" %}
+                <td class="text-primary text-center"><b>{{ order.order_status }}</b></td>
+                {% elif order.order_status == "Packed" %}
+                <td class="text-warning text-center"><b>{{ order.order_status }}</b></td>
+                {% elif order.order_status == "Shipped" %}
+                <td class="text-info text-center"><b>{{ order.order_status }}</b></td>
+                {% elif order.order_status == "Deliverd" %}
+                <td class="text-success text-center"><b>{{ order.order_status }}</b></td>
+                {% elif order.order_status == "Order Closed" %}
+                <td class="text-dark text-center"><b>{{ order.order_status }}</b></td>
+                {% elif order.order_status == "Canceled" %}
+                <td class="text-danger text-center"><b>{{ order.order_status }}</b></td>
+                {% endif %}
+                <td class="text-center">{{ order.date_and_time }}</td>
+                <td class="text-center"><a href="/user_view_order/{{ order.bunch_order_id }}" class="btn btn-primary">View Order</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock body %}

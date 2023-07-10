@@ -1,0 +1,172 @@
+﻿{% extends 'adminside/adminbase.html' %}
+{% block title %}Sales Report{% endblock title %}
+{% block body %}
+<div class="container">
+    <div class="d-flex align-items-center justify-content-between">
+        <div>
+            <ul class="nav nav-pills mt-3 mb-4">
+                <li class="nav-item me-3">
+                    <a class="nav-link active" id="daily-tab" data-bs-toggle="pill" href="#daily">Daily</a>
+                </li>
+                <li class="nav-item me-3">
+                    <a class="nav-link" id="weekly-tab" data-bs-toggle="pill" href="#weekly">Weekly</a>
+                </li>
+                <li class="nav-item me-3">
+                    <a class="nav-link" id="monthly-tab" data-bs-toggle="pill" href="#monthly">Monthly</a>
+                </li>
+            </ul>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+        <script>
+            function exportTableToExcel(table_id, filename = 'Sales-report') {
+                var downloadLink;
+                var dataType = 'application/vnd.ms-excel';
+                var tableSelect = document.getElementById(table_id);
+                var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+                // Specify file name
+                filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+                // Create download link element
+                downloadLink = document.createElement("a");
+
+                document.body.appendChild(downloadLink);
+
+                if (navigator.msSaveOrOpenBlob) {
+                    var blob = new Blob(['\ufeff', tableHTML], {
+                        type: dataType
+                    });
+                    navigator.msSaveOrOpenBlob(blob, filename);
+                } else {
+                    // Create a link to the file
+                    downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                    // Setting the file name
+                    downloadLink.download = filename;
+
+                    //triggering the function
+                    downloadLink.click();
+                    location.reload()
+                }
+            }
+        </script>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="daily">
+            <div class="d-flex align-items-center justify-content-between">
+                <h2>Daily Sales Report({{ today_date }})</h2>
+                <h2>Total Revenue: <b>₹{{ daily_total_revenue }}</b></h2>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-dark text-light" onclick="exportTableToExcel('daily_sales', 'Sales Report');">
+                    <b>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                            <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                            <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        </svg>
+                        Print Report
+                    </b>
+                </button>
+            </div>
+            <table class="table table-warning table-striped mt-3" id="daily_sales">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Product</th>
+                        <th>Quantity Sold</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in daily_sales %}
+                    <tr>
+                        <td><b>{{ today_date }}</b></td>
+                        <td>{{ sale.product_name }}</td>
+                        <td>{{ sale.total_quantity_sold }} kg(or)unit</td>
+                        <td><b>₹{{ sale.total_revenue }}</b></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane fade" id="weekly">
+            <div class="d-flex align-items-center justify-content-between">
+                <h2>Weekly Sales Report({{ week_start_date }}-{{ week_end_date }})</h2>
+                <h2>Total Revenue: <b>₹{{ weekly_total_revenue }}</b></h2>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-dark text-light" onclick="exportTableToExcel('weekly_sales', 'Sales Report');">
+                    <b>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                            <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                            <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        </svg>
+                        Print Report
+                    </b>
+                </button>
+            </div>
+            <table class="table table-success table-striped mt-3" id="weekly_sales">
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Product</th>
+                        <th>Quantity Sold</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in weekly_sales %}
+                    <tr>
+                        <td><b>{{ week_start_date }}-{{ week_end_date }}</b></td>
+                        <td>{{ sale.product_name }}</td>
+                        <td>{{ sale.total_quantity_sold }} kg(or)unit</td>
+                        <td><b>₹{{ sale.total_revenue }}</b></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane fade" id="monthly">
+            <div class="d-flex align-items-center justify-content-between">
+                <h2>Monthly Sales Report({{ month_start_date }}-{{ month_end_date }})</h2>
+                <h2>Total Revenue: <b>₹{{ monthly_total_revenue }}</b></h2>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-dark text-light" onclick="exportTableToExcel('monthly_sales', 'Sales Report');">
+                    <b>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                            <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                            <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        </svg>
+                        Print Report
+                    </b>
+                </button>
+            </div>
+            <table class="table table-primary table-striped mt-3" id="monthly_sales">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Product</th>
+                        <th>Quantity Sold</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in monthly_sales %}
+                    <tr>
+                        <td><b>{{ month_start_date }}-{{ month_end_date }}</b></td>
+                        <td>{{ sale.product_name }}</td>
+                        <td>{{ sale.total_quantity_sold }} kg(or)unit</td>
+                        <td><b>₹{{ sale.total_revenue }}</b></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock body %}

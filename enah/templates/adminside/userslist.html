@@ -1,0 +1,30 @@
+﻿{% extends 'adminside/adminbase.html' %}
+{% block title %}User List{% endblock title %}
+{% block body %}
+<div class="container mt-4">
+    <h2>User Details</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>Email ID</th>
+                <th>Phone Number</th>
+                <th>Is Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in s %}
+            <tr>
+                <td><a href="/viewuser/{{ i.id }}">{{ i.id }}</a></td>
+                <td>{{ i.name }}</td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.phone }}</td>
+                <td>{{ i.is_active }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock body %}

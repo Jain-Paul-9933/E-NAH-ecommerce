@@ -1,0 +1,41 @@
+﻿{% extends 'vendorside/vendorbase.html' %}
+{% block title %}Coupons List{% endblock title %}
+{% block body %}
+<div class="container">
+    <h2 class="mt-4">Registered Coupons</h2>
+    {% if coupons %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Vendor Id</th>
+                <th>Coupon Code</th>
+                <th>Coupon Description</th>
+                <th>Coupon Type</th>
+                <th>Discount</th>
+                <th>Expiration Date</th>
+                <th>Disabled</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coupon in coupons %}
+            <tr>
+                <td>{{ coupon.vendor_id }}</td>
+                <td><b>{{ coupon.coupon_code }}</b></td>
+                <td>{{ coupon.coupon_description }}</td>
+                <td>{{ coupon.coupon_type }}</td>
+                {% if coupon.coupon_type == 'percentage_off' %}
+                <td><b>-{{ coupon.discount }}%</b></td>
+                {% else %}
+                <td><b>-₹{{ coupon.discount }}/-</b></td>
+                {% endif %}
+                <td>{{ coupon.expiration_date }}</td>
+                <td>{{ coupon.is_disabled }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <center><h4>No Coupons Registerd !!!</h4></center>
+    {% endif %}
+</div>
+{% endblock body %}

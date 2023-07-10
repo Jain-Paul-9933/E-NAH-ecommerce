@@ -1,0 +1,58 @@
+﻿{% extends 'userside/base.html' %}
+{% block title %} Address Updation Page{% endblock title %}
+{% block body %}
+<div class="container mt-5">
+    <h1>Address Updation Form</h1>
+
+    <form action="/address_updation/{{ address.id }}" method="post" class="w-50">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="full_name">Full Name</label>
+            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ address.full_name }}">
+        </div>
+
+        <div class="form-group">
+            <label for="address_lane_1">Address Lane 1</label>
+            <input type="text" class="form-control" id="address_lane_1" name="address_lane_1" value="{{ address.address_lane_1 }}">
+        </div>
+
+        <div class="form-group">
+            <label for="address_lane_2">Address Lane 2</label>
+            <input type="text" class="form-control" id="address_lane_2" name="address_lane_2" value="{{ address.address_lane_2 }}">
+        </div>
+
+        <div class="form-group">
+            <label for="city_or_town">City or Town</label>
+            <input type="text" class="form-control" id="city_or_town" name="city_or_town" value="{{ address.city_or_town }}">
+        </div>
+
+        <div class="form-group">
+            <label for="district">District</label>
+            <input type="text" class="form-control" id="district" name="district" value="{{ address.district }}">
+        </div>
+
+        <div class="form-group">
+            <label for="pincode">Pincode</label>
+            <input type="text" class="form-control" id="pincode" name="pincode" value="{{ address.pincode }}">
+        </div>
+
+        <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ address.phone_number }}">
+        </div>
+
+        <div class="form-group">
+            <label for="alt_phone_number">Alternate Phone Number</label>
+            <input type="text" class="form-control" id="alt_phone_number" name="alt_phone_number" value="{{ address.alt_phone_number }}">
+        </div>
+
+        <div class="form-group">
+            <label for="land_mark">Landmark</label>
+            <input type="text" class="form-control" id="land_mark" name="land_mark" value="{{ address.land_mark }}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+{% endblock body %}

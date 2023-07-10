@@ -1,0 +1,48 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mobile OTP Verification Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .login-container {
+            background: url("{% static 'images/fresh-fruits-vegetables-background-image.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+        }
+
+        .login-form {
+            background-color: rgba(255, 255, 255,0.9);
+            padding: 20px;
+            margin: 200px auto;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <form action="/mobileotpverification/{{ phone }}" method="post" class="login-form">
+                        {% csrf_token %}
+                        <center><h2>Mobile OTP Verification</h2></center>
+                        <div class="form-group">
+                            <center>
+                                <label for="otp">Enter the 6 digit OTP verification code :</label>
+                            </center>
+                            <input type="text" class="form-control" id="otp" name="otp" required>
+                        </div>
+                        <center>
+                            <button type="submit" class="btn btn-success">Login</button>
+                        </center>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

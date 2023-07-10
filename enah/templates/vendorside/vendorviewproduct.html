@@ -1,0 +1,27 @@
+﻿{% extends 'vendorside/vendorbase.html' %}
+{% block title %}Product details{% endblock title %}
+{% block body %}
+<div class="container mt-4">
+    <h1>Product Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"> {{ s.productname }}</h5>
+            <p class="card-text"><strong>Product ID:</strong> {{ s.id }}</p>
+            <p class="card-text"><strong>Product Description:</strong> {{ s.product_description }}</p>
+            <p class="card-text"><strong>Product Category:</strong> {{ s.product_category }}</p>
+            <p class="card-text"><strong>Quantity:</strong> {{ s.quantity }}</p>
+            <p class="card-text"><strong>Unit Price:</strong> {{ s.unit_price }}</p>
+            <img src="/media/{{ s.img1 }}" class="img-thumbnail" alt="image1" width="250" height="300">
+            <img src="/media/{{ s.img2 }}" class="img-thumbnail" alt="image2" width="250" height="300">
+            <img src="/media/{{ s.img3 }}" class="img-thumbnail" alt="image3" width="250" height="300">
+            <img src="/media/{{ s.img4 }}" class="img-thumbnail" alt="image4" width="250" height="300">
+        </div>
+    </div>
+    {% if s.is_active is True %}
+    <a class="btn btn-danger" href="/blockproduct/{{ s.id }}" role="button">Block</a>
+    {% else %}
+    <a class="btn btn-warning" href="/unblockproduct/{{ s.id }}" role="button">Unblock</a>
+    {% endif %}
+    <a class="btn btn-info" href="/updateproduct/{{ s.id }}" role="button">Update</a>
+</div>
+{% endblock body %}

@@ -1,0 +1,71 @@
+﻿{% extends 'vendorside/vendorbase.html' %}
+{% block title %}Products List{% endblock title %}
+{% block body %}
+<div class="container mt-4">
+    <h2>Products Details</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Product Category</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Image</th>
+                <th>Is Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in s %}
+            <tr>
+                <td><a href="/vendorviewproduct/{{ i.id }}">{{ i.id }}</a></td>
+                <td>{{ i.productname }}</td>
+                <td>{{ i.product_category }}</td>
+                <td>{{ i.quantity }}</td>
+                <td>{{ i.unit_price }}</td>
+                <td><img src="/media/{{ i.img1 }}" width="120" /></td>
+                <td>{{ i.is_active }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-success m-5" href="/product_registration" role="button">Add New Product</a>
+</div>
+
+
+{% endblock body %}{% extends 'vendorside/vendorbase.html' %}
+{% block title %}Products List{% endblock title %}
+{% block body %}
+<div class="container mt-4">
+    <h2>Products Details</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Product Category</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Image</th>
+                <th>Is Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in s %}
+            <tr>
+                <td><a href="/vendorviewproduct/{{ i.id }}">{{ i.id }}</a></td>
+                <td>{{ i.productname }}</td>
+                <td>{{ i.product_category }}</td>
+                <td>{{ i.quantity }}</td>
+                <td>{{ i.unit_price }}</td>
+                <td><img src="/media/{{ i.img1 }}" width="120" /></td>
+                <td>{{ i.is_active }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-success m-5" href="/product_registration" role="button">Add New Product</a>
+</div>
+
+
+{% endblock body %}

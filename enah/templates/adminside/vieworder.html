@@ -1,0 +1,40 @@
+﻿{% extends 'adminside/adminbase.html' %}
+{% block title %}Order details{% endblock title %}
+{% block body %}
+<div class="container">
+    <h1>Order Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Order ID: {{ order.id }}</h5>
+            <p class="card-text">Product:  {{ product.productname }}</p>
+            <p class="card-text">Vendor ID: {{ vendor.id }}</p>
+            <p class="card-text">Vendor Name: {{ vendor.name }}</p>
+            <p class="card-text">User: {{ user.name }}</p>
+            <p class="card-text">
+                Address: {{ address.full_name }},
+            </p>
+            <p class="card-text">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ address.address_lane_1 }},{{ address.address_lane_2 }},
+            </p>
+            <p class="card-text">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ address.city_or_town }},{{ address.district }},{{ address.pincode }},
+            </p>
+            <p class="card-text">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ph.no:  {{ address.phone_number }},{{ address.alt_phone_number }},
+            </p>
+            <p class="card-text">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Landmark:  {{ address.land_mark }}.
+            </p>
+            <p class="card-text">Quantity: {{ order.quantity }}</p>
+            <p class="card-text">Amount: {{ order.amount }}</p>
+            <p class="card-text">Payment Type: {{ order.payment_type }}</p>
+            <p class="card-text">Payment Status: {{ order.payment_status }}</p>
+            <p class="card-text">Order Status: {{ order.order_status }}</p>
+            <p class="card-text">Date and Time: {{ order.date_and_time }}</p>
+        </div>
+    </div>
+    {% if order.order_status != 'Order Closed' and order.order_status != 'Deliverd' and order.order_status != 'Canceled' %}
+    <a class="btn btn-danger" href="/admin_cancel_order/{{ order.id }}">Cancel</a>
+    {% endif %}
+</div>
+{% endblock body %}

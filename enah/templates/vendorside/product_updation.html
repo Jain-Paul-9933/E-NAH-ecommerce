@@ -1,0 +1,57 @@
+﻿{% extends 'vendorside/vendorbase.html' %}
+{% block title %}Product Updation{% endblock title %}
+{% block body %}
+<div class="container">
+    <h1>Product Updation</h1>
+    <form action="/product_updation/{{ p.id }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="product-name">Product Id:</label>
+            <input type="text" class="form-control" id="product-id" name="product_id" value="{{ p.id }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="product-name">Product Name:</label>
+            <input type="text" class="form-control" id="product-name" name="product_name" value="{{ p.productname }}" required>
+        </div>
+        <div class="form-group">
+            <label for="product-description">Product Description:</label>
+            <textarea class="form-control" id="product-description" name="product_description" required>{{ p.product_description }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="product-categories">Product Categories:</label>
+            <select class="form-control mb-3" id="product-category" name="product_category" required>
+                <option selected>{{ p.product_category }}</option>
+                <option value="farm_fresh">Farm Fresh</option>
+                <option value="home_mades">Home Mades</option>
+                <option value="crafts">Crafts</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" value="{{ p.quantity }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="unit-price">Unit Price:</label>
+            <input type="number" class="form-control" id="unit-price" name="unit_price" value="{{ p.unit_price }}" required>
+        </div>
+        <div class="form-group">
+            <label for="image1">Image 1:</label>
+            <input type="file" class="form-control-file" id="image1" name="image1" value="{{ p.img1 }}">
+        </div>
+        <div class="form-group">
+            <label for="image2">Image 2:</label>
+            <input type="file" class="form-control-file" id="image2" name="image2" value="{{ p.img1 }}">
+        </div>
+        <div class="form-group">
+            <label for="image3">Image 3:</label>
+            <input type="file" class="form-control-file" id="image3" name="image3" value="{{ p.img1 }}">
+        </div>
+        <div class="form-group">
+            <label for="image4">Image 4:</label>
+            <input type="file" class="form-control-file" id="image4" name="image4" value="{{ p.img1 }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+{% endblock body %}

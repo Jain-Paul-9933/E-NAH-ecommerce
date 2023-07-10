@@ -1,0 +1,133 @@
+﻿{% extends 'adminside/adminbase.html' %}
+{% block title %} Coupons List{% endblock title %}
+{% block body %}
+<div class="container">
+    <h2 class="mt-4">Registered Coupons</h2>
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show " role="alert">
+        <strong></strong>{{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% if coupons %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Coupon Code</th>
+                <th>Coupon Description</th>
+                <th>Coupon Type</th>
+                <th>Discount</th>
+                <th>Expiration Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coupon in coupons %}
+            <tr>
+                <td>{{ coupon.coupon_code }}</td>
+                <td><b>{{ coupon.coupon_description }}</b></td>
+                <td>{{ coupon.coupon_type }}</td>
+                {% if coupon.coupon_type == 'percentage_off' %}
+                <td><b>-{{ coupon.discount }}%</b></td>
+                {% else %}
+                <td><b>-₹{{ coupon.discount }}/-</b></td>
+                {% endif %}
+                <td>{{ coupon.expiration_date }}</td>
+                {% if coupon.is_disabled == False %}
+                <td>
+                    <a class="btn btn-danger" href="/disable_enable_coupon/{{ coupon.id }}">Disable Coupon</a>
+                </td>
+                {% else %}
+                <td>
+                    <a class="btn btn-success" href="/disable_enable_coupon/{{ coupon.id }}">Enable Coupon</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <center><h4>No Coupons Registerd !!!</h4></center>
+    {% endif %}
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary mt-3 mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Register new coupon
+    </button>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form action="/coupon_registration" method="post">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Coupon Registration Form</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="couponCode">Vendor Id:</label>
+                        <input type="text" class="form-control" id="vendor_id" name="vendor_id" placeholder="Enter the vendor id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="couponCode">Coupon Code:</label>
+                        <input type="text" class="form-control" id="couponCode" name="coupon_code" placeholder="Enter the coupon code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="couponDescription">Coupon Description:</label>
+                        <input type="text" class="form-control" id="couponDescription" name="coupon_description" placeholder="Enter the coupon description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="couponType">Coupon Type:</label>
+                        <select class="form-control mb-3" id="coupon_type" name="coupon_type" required>
+                            <option>Select Category</option>
+                            <option value="percentage_off">Percentage Off</option>
+                            <option value="fixed_amount">Fixed Amount</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="discount">Discount (%) or (amount):</label>
+                        <input type="number" class="form-control" id="discount" name="discount" placeholder="Enter the discount percentage or fixed amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expirationDate">Expiration Date:</label>
+                        <input type="date" class="form-control" id="expirationDate" name="expiration_date" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--<div class="container">
+    <h2 class="mt-4">Vendor Coupon Registration Form</h2>
+    <form>
+        <div class="form-group">
+            <label for="vendorName">Vendor Name:</label>
+            <input type="text" class="form-control" id="vendorName" placeholder="Enter your vendor name" required>
+        </div>
+        <div class="form-group">
+            <label for="vendorEmail">Vendor Email:</label>
+            <input type="email" class="form-control" id="vendorEmail" placeholder="Enter your vendor email" required>
+        </div>
+        <div class="form-group">
+            <label for="couponCode">Coupon Code:</label>
+            <input type="text" class="form-control" id="couponCode" placeholder="Enter the coupon code" required>
+        </div>
+        <div class="form-group">
+            <label for="discount">Discount (%):</label>
+            <input type="number" class="form-control" id="discount" placeholder="Enter the discount percentage" required>
+        </div>
+        <div class="form-group">
+            <label for="expirationDate">Expiration Date:</label>
+            <input type="date" class="form-control" id="expirationDate" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>-->
+{% endblock body %}

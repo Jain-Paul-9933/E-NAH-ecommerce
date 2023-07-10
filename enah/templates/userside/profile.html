@@ -1,0 +1,33 @@
+﻿{% extends 'userside/base.html' %}
+{% load static %}
+{% block title %}User Profile Page{% endblock title %}
+{% block body %}
+<div class="container  mt-5">
+    <div class="row d-flex justify-content-center align-items-center mt-5">
+        <div class="col-md-4 mt-3">
+            <div class="card d-flex align-items-center justify-content-center">
+                <div class="p-5">
+                    <img src="{% static 'images/profile_Dummy-profile-2.jpg' %}" class="card-img-top" alt="Profile Picture">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ request.user.name }}</h5>
+                    <p class="card-text">{{ request.user.email }}</p>
+                    <p class="card-text">{{ request.user.phone }}</p>
+                </div>
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div class="text-start">
+                        <a href="/yourorders" class="btn btn-primary mb-2">Your Orders</a>
+                        <a href="/youraddress" class="btn btn-primary mt-2">Your Address</a>
+                    </div>
+                    <div class="text-end">
+                        <a href="/wishlist" class="btn btn-primary mb-2">Your Wishlist</a>
+                        <form action="/logout" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger mt-2">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

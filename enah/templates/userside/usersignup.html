@@ -1,0 +1,117 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        .signup-container {
+            background: url("{% static 'images/fresh-fruits-vegetables-background-image.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            height: auto;
+        }
+
+        .signup-form {
+            background-color: rgba(255, 255, 255,0.9);
+            padding: 20px;
+            margin: 70px auto;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <form action="/usersignup" method="post" class="signup-form ">
+                        {% csrf_token %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{message.tags}} alert-dismissible fade show " role="alert">
+                            <strong></strong>{{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                        <center><h2>Sign Up</h2></center>
+                        <div class="form-group">
+                            <label for="name">Full Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number:</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter phone number">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password:</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm password">
+                        </div>
+                        <center>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                            <p class="mt-3">Are you a existing user,then <a href="/userlogin">Log In</a></p>
+                        </center>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <!-- <script>
+         function validateForm() {
+             var name = document.getElementById("name").value;
+             var email = document.getElementById("email").value;
+             var phone = document.getElementById("phone").value;
+             var password = document.getElementById("password").value;
+             var confirmPassword = document.getElementById("confirm_password").value;
+
+             // Regular expressions
+             var nameRegex = /^[a-zA-Z\s]+$/;
+             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+             var phoneRegex = /^(\+91|0)?[6789]\d{9}$/;
+             var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+             if (!nameRegex.test(name)) {
+                 alert("Name is not valid");
+                 return false;
+             }
+
+             if (!emailRegex.test(email)) {
+                 alert("Email is not valid");
+                 return false;
+             }
+
+             if (!phoneRegex.test(phone)) {
+                 alert("Phone number is not valid");
+                 return false;
+             }
+
+             if (!passwordRegex.test(password)) {
+                 alert("Password is not valid. It should contain at least 8 characters, one uppercase letter, one lowercase letter, and one digit.");
+                 return false;
+             }
+
+             if (confirmPassword !== password) {
+                 alert("Confirm Password should match the Password");
+                 return false;
+             }
+
+             // Perform other custom validation checks
+             // ...
+
+             return true;
+         }
+     </script>-->
+</body>
+</html>
